@@ -55,7 +55,12 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            EditScreen.route(),
+                            MaterialPageRoute(
+                              builder: (_) => EditScreen(
+                                editMode: true,
+                                note: notes[index],
+                              ),
+                            ),
                           );
                         },
                       ),
@@ -81,7 +86,12 @@ class HomeScreen extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              EditScreen.route(),
+              MaterialPageRoute(
+                builder: (_) => EditScreen(
+                  editMode: false,
+                  note: notes[index],
+                ),
+              ),
             );
           },
           onLongPress: () {
@@ -109,7 +119,11 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                EditScreen.route(),
+                MaterialPageRoute(
+                  builder: (_) => const EditScreen(
+                    editMode: true,
+                  ),
+                ),
               );
             },
           ),

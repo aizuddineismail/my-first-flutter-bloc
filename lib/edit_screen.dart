@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-class EditScreen extends StatefulWidget {
-  static Route route() => MaterialPageRoute(builder: (_) => const EditScreen());
+import 'package:map_exam/db/models/note.dart';
 
-  const EditScreen({Key? key}) : super(key: key);
+class EditScreen extends StatefulWidget {
+  final bool editMode;
+  final Note? note;
+
+  const EditScreen({
+    Key? key,
+    required this.editMode,
+    this.note,
+  }) : super(key: key);
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -19,14 +26,21 @@ class _EditScreenState extends State<EditScreen> {
       appBar: AppBar(
         leading: Container(),
         centerTitle: true,
-        title: const Text('App Bar Title'),
+        title: Text(
+          widget.note == null
+              ? 'Add new Note'
+              : widget.editMode
+                  ? 'Edit Note'
+                  : 'View Note',
+        ),
         actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.check_circle,
-                size: 30,
-              ),
-              onPressed: () {}),
+          if (widget.editMode)
+            IconButton(
+                icon: const Icon(
+                  Icons.check_circle,
+                  size: 30,
+                ),
+                onPressed: () {}),
           IconButton(
               icon: const Icon(
                 Icons.cancel_sharp,
