@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_exam/cubits/note_display_cubit/note_display_cubit.dart';
 import 'package:map_exam/cubits/note_list_cubit/note_list_cubit.dart';
 import 'package:map_exam/cubits/note_tool_cubit/note_tool_cubit.dart';
+import 'package:map_exam/edit_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const HomeScreen());
@@ -51,7 +52,12 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.edit, color: Colors.blue),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            EditScreen.route(),
+                          );
+                        },
                       ),
                       IconButton(
                         icon: const Icon(
@@ -72,7 +78,12 @@ class HomeScreen extends StatelessWidget {
           subtitle: showState == NoteDisplayState.show
               ? Text(notes[index].content ?? 'Note content')
               : null,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              EditScreen.route(),
+            );
+          },
           onLongPress: () {
             context.read<NoteToolCubit>().toggleNoteTool(notes[index].id);
           },
@@ -95,7 +106,12 @@ class HomeScreen extends StatelessWidget {
           FloatingActionButton(
             child: const Icon(Icons.add),
             tooltip: 'Add a new note',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                EditScreen.route(),
+              );
+            },
           ),
         ],
       ),
