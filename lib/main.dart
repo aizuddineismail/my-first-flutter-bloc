@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_exam/auth_widget.dart';
 import 'package:map_exam/cubits/auth_cubit/auth_cubit.dart';
+import 'package:map_exam/cubits/note_display_cubit/note_display_cubit.dart';
 import 'package:map_exam/cubits/note_list_cubit/note_list_cubit.dart';
 import 'package:map_exam/db/repositories/auth_repository.dart';
 import 'package:map_exam/db/repositories/note_repository.dart';
@@ -44,6 +45,9 @@ class App extends StatelessWidget {
               authCubit: context.read<AuthCubit>(),
               noteRepository: context.read<NoteRepository>(),
             ),
+          ),
+          BlocProvider<NoteDisplayCubit>(
+            create: (context) => NoteDisplayCubit(),
           ),
         ],
         child: MaterialApp(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_exam/cubits/note_display_cubit/note_display_cubit.dart';
 import 'package:map_exam/cubits/note_list_cubit/note_list_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,6 +10,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notes = context.watch<NoteListCubit>().state.notes;
+    final showState = context.watch<NoteDisplayCubit>().state;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Notes'),
@@ -54,7 +57,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           title: Text(notes[index].title ?? 'Note title'),
-          subtitle: Text(notes[index].content ?? 'Note content'),
+          subtitle: showState == NoteDisplayState.show
+              ? Text(notes[index].content ?? 'Note content')
+              : null,
           onTap: () {},
           onLongPress: () {},
         ),
@@ -63,9 +68,13 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-              child: const Icon(Icons.menu),
+              child: showState == NoteDisplayState.show
+                  ? const Icon(Icons.unfold_less)
+                  : const Icon(Icons.menu),
               tooltip: 'Show less. Hide notes content',
-              onPressed: () {}),
+              onPressed: () {
+                context.read<NoteDisplayCubit>().toggleDisplay();
+              }),
 
           /* Notes: for the "Show More" icon use: Icons.menu */
 
