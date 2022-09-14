@@ -5,6 +5,7 @@ import 'package:map_exam/auth_widget.dart';
 import 'package:map_exam/cubits/auth_cubit/auth_cubit.dart';
 import 'package:map_exam/cubits/note_display_cubit/note_display_cubit.dart';
 import 'package:map_exam/cubits/note_list_cubit/note_list_cubit.dart';
+import 'package:map_exam/cubits/note_tool_cubit/note_tool_cubit.dart';
 import 'package:map_exam/db/repositories/auth_repository.dart';
 import 'package:map_exam/db/repositories/note_repository.dart';
 import 'package:map_exam/firebase_options.dart';
@@ -48,6 +49,9 @@ class App extends StatelessWidget {
           ),
           BlocProvider<NoteDisplayCubit>(
             create: (context) => NoteDisplayCubit(),
+          ),
+          BlocProvider<NoteToolCubit>(
+            create: (context) => NoteToolCubit(),
           ),
         ],
         child: MaterialApp(
