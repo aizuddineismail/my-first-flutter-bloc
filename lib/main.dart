@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_exam/auth_widget.dart';
 import 'package:map_exam/cubits/auth_cubit/auth_cubit.dart';
+import 'package:map_exam/cubits/note_list_cubit/note_list_cubit.dart';
 import 'package:map_exam/db/repositories/auth_repository.dart';
+import 'package:map_exam/db/repositories/note_repository.dart';
 import 'package:map_exam/firebase_options.dart';
 
 // import 'login_screen.dart';
@@ -21,12 +23,29 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<AuthRepository>(
-      create: (context) => AuthRepository(),
-      child: BlocProvider<AuthCubit>(
-        create: (context) => AuthCubit(
-          authRepository: context.read<AuthRepository>(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (context) => AuthRepository(),
         ),
+        RepositoryProvider<NoteRepository>(
+          create: (context) => NoteRepository(),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthCubit>(
+            create: (context) => AuthCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider<NoteListCubit>(
+            create: (context) => NoteListCubit(
+              authCubit: context.read<AuthCubit>(),
+              noteRepository: context.read<NoteRepository>(),
+            ),
+          ),
+        ],
         child: MaterialApp(
             title: 'myFirst',
             theme: ThemeData(
