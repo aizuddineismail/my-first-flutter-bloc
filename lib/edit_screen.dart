@@ -21,6 +21,13 @@ class _EditScreenState extends State<EditScreen> {
   final _descriptionController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.note?.title ?? '';
+    _descriptionController.text = widget.note?.content ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +63,7 @@ class _EditScreenState extends State<EditScreen> {
             TextFormField(
               controller: _titleController,
               initialValue: null,
-              enabled: true,
+              enabled: widget.editMode,
               decoration: const InputDecoration(
                 hintText: 'Type the title here',
               ),
@@ -68,7 +75,7 @@ class _EditScreenState extends State<EditScreen> {
             Expanded(
               child: TextFormField(
                   controller: _descriptionController,
-                  enabled: true,
+                  enabled: widget.editMode,
                   initialValue: null,
                   maxLines: null,
                   expands: true,
