@@ -40,4 +40,36 @@ class NoteRepository {
       throw 'Firebase Error';
     }
   }
+
+  Future<void> editNote(
+    String uid,
+    dynamic id,
+    String title,
+    String content,
+  ) async {
+    try {
+      await firebaseFirestore
+          .collection('users')
+          .doc(uid)
+          .collection('notes')
+          .doc(id)
+          .set({'title': title, 'content': content});
+    } on FirebaseException catch (e) {
+      print(e);
+      throw 'Firebase Error';
+    }
+  }
+
+  Future<void> addNote(String uid, String title, String content) async {
+    try {
+      await firebaseFirestore
+          .collection('users')
+          .doc(uid)
+          .collection('notes')
+          .add({'title': title, 'content': content});
+    } on FirebaseException catch (e) {
+      print(e);
+      throw 'Firebase Error';
+    }
+  }
 }

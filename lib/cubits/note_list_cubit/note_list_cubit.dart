@@ -31,4 +31,23 @@ class NoteListCubit extends Cubit<NoteListState> {
       print(e);
     }
   }
+
+  Future<void> editNote(dynamic id, String title, String content) async {
+    try {
+      await noteRepository.editNote(
+          authCubit.state.user!.uid, id, title, content);
+      await getAllNotes();
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> addNote(String title, String content) async {
+    try {
+      await noteRepository.addNote(authCubit.state.user!.uid, title, content);
+      await getAllNotes();
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
 }
