@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_exam/cubits/auth_cubit/auth_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   static Route route() =>
@@ -10,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
@@ -26,20 +28,27 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text('Please sign in', style: TextStyle(fontSize: 35.0)),
               const SizedBox(height: 20),
               TextField(
-                controller: _usernameController,
+                controller: _emailController,
                 decoration:
                     const InputDecoration(hintText: 'Type your email here'),
                 onTap: () {},
               ),
               TextField(
                 controller: _passwordController,
+                obscureText: true,
                 decoration: const InputDecoration(
                   hintText: 'Type your password',
                 ),
                 onTap: () {},
               ),
               const SizedBox(height: 10.0),
-              ElevatedButton(child: const Text('Sign in'), onPressed: () {}),
+              ElevatedButton(
+                  child: const Text('Sign in'),
+                  onPressed: () {
+                    context.read<AuthCubit>().signInWithEmailAndPassword(
+                        _emailController.text.trim(),
+                        _passwordController.text.trim());
+                  }),
             ],
           ),
         ),
