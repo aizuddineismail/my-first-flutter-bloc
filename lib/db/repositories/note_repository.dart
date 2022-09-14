@@ -26,4 +26,18 @@ class NoteRepository {
       throw 'Firebase Error';
     }
   }
+
+  Future<void> deleteNote(String uid, String noteId) async {
+    try {
+      await firebaseFirestore
+          .collection('users')
+          .doc(uid)
+          .collection('notes')
+          .doc(noteId)
+          .delete();
+    } on FirebaseException catch (e) {
+      print(e);
+      throw 'Firebase Error';
+    }
+  }
 }

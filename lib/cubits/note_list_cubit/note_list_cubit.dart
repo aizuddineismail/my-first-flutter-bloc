@@ -22,4 +22,13 @@ class NoteListCubit extends Cubit<NoteListState> {
       print(e);
     }
   }
+
+  Future<void> deleteNote(String noteId) async {
+    try {
+      await noteRepository.deleteNote(authCubit.state.user!.uid, noteId);
+      await getAllNotes();
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
 }
